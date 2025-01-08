@@ -11,6 +11,7 @@ local function scanDir(directory, extension)
 	local t = { }
 	local pFile = io.popen('dir "'..directory..'" /b')
 	for filename in pFile:lines() do
+		filename = filename:gsub('\r?$', '')
 		--ConPrintf("%s\n", filename)
 		if extension then
 			if filename:match(extension) then
@@ -35,8 +36,8 @@ local GGPKClass = newClass("GGPKData", function(self, path, datPath)
 		self.oozPath = datPath:match("\\$") and datPath or (datPath .. "\\")
 	else
 		self.path = path
-		self.temp = io.popen("cd"):read('*l')
-		self.oozPath = self.temp .. "\\ggpk\\"
+		self.oozPath = io.popen("cd"):read('*l'):gsub('\r?', '') .. "\\ggpk\\"
+		self:CleanDir()
 		self:ExtractFiles()
 	end
 
@@ -50,27 +51,62 @@ local GGPKClass = newClass("GGPKData", function(self, path, datPath)
 	end
 end)
 
+function GGPKClass:CleanDir()
+	local cmd = 'del ' .. self.oozPath .. 'Data ' .. self.oozPath .. 'Metadata /Q /S'
+	ConPrintf(cmd)
+	os.execute(cmd)
+end
+
+function GGPKClass:ExtractFilesWithBun(fileListStr)
+	local cmd = 'cd ' .. self.oozPath .. ' && bun_extract_file.exe extract-files "' .. self.path .. '" . ' .. fileListStr
+	ConPrintf(cmd)
+	os.execute(cmd)
+end
+
 function GGPKClass:ExtractFiles()
 	local datList, txtList, itList = self:GetNeededFiles()
-	
+	local sweetSpotCharacter = 6000
 	local fileList = ''
 	for _, fname in ipairs(datList) do
 		if USE_DAT64 then
-			fileList = fileList .. '"' .. fname .. '64" '
+			fileList = fileList .. '"' .. fname .. 'c64" '
 		else
 			fileList = fileList .. '"' .. fname .. '" '
 		end
+
+		if fileList:len() > sweetSpotCharacter then
+			self:ExtractFilesWithBun(fileList)
+			fileList = ''
+		end
 	end
+
 	for _, fname in ipairs(txtList) do
 		fileList = fileList .. '"' .. fname .. '" '
+
+		if fileList:len() > sweetSpotCharacter then
+			self:ExtractFilesWithBun(fileList)
+			fileList = ''
+		end
 	end
+
 	for _, fname in ipairs(itList) do
 		fileList = fileList .. '"' .. fname .. '" '
+
+		if fileList:len() > sweetSpotCharacter then
+			self:ExtractFilesWithBun(fileList)
+			fileList = ''
+		end
 	end
-	
-	local cmd = 'cd ' .. self.oozPath .. ' && bun_extract_file.exe extract-files "' .. self.path .. '" . ' .. fileList
-	ConPrintf(cmd)
-	os.execute(cmd)
+
+	if (fileList:len() > 0) then
+		self:ExtractFilesWithBun(fileList)
+	end
+
+	-- Overwrite Enums
+	local errMsg = PLoadModule("Scripts/enums.lua")
+	if errMsg then
+		print(errMsg)
+	end
 end
 
 function GGPKClass:AddDatFiles()
@@ -87,7 +123,7 @@ function GGPKClass:AddDatFiles()
 end
 
 function GGPKClass:AddDat64Files()
-	local datFiles = scanDir(self.oozPath .. "Data\\", '%w+%.dat64$')
+	local datFiles = scanDir(self.oozPath .. "Data\\", '%w+%.datc64$')
 	for _, f in ipairs(datFiles) do
 		local record = { }
 		record.name = f
@@ -102,7 +138,6 @@ end
 function GGPKClass:GetNeededFiles()
 	local datFiles = {
 		"Data/Stats.dat",
-		"Data/StatSemantics.dat",
 		"Data/VirtualStatContextFlags.dat",
 		"Data/BaseItemTypes.dat",
 		"Data/WeaponTypes.dat",
@@ -112,7 +147,6 @@ function GGPKClass:GetNeededFiles()
 		"Data/ComponentCharges.dat",
 		"Data/ComponentAttributeRequirements.dat",
 		"Data/PassiveSkills.dat",
-		"Data/PassiveSkillTypes.dat",
 		"Data/PassiveSkillStatCategories.dat",
 		"Data/PassiveSkillMasteryGroups.dat",
 		"Data/PassiveSkillMasteryEffects.dat",
@@ -123,14 +157,10 @@ function GGPKClass:GetNeededFiles()
 		"Data/PassiveTreeExpansionSpecialSkills.dat",
 		"Data/Mods.dat",
 		"Data/ModType.dat",
-		"Data/ModDomains.dat",
-		"Data/ModGenerationType.dat",
 		"Data/ModFamily.dat",
-		"Data/ModAuraFlags.dat",
 		"Data/ModSellPriceTypes.dat",
 		"Data/ModEffectStats.dat",
 		"Data/ActiveSkills.dat",
-		"Data/ActiveSkillTargetTypes.dat",
 		"Data/ActiveSkillType.dat",
 		"Data/AlternateSkillTargetingBehaviours.dat",
 		"Data/Ascendancy.dat",
@@ -138,17 +168,13 @@ function GGPKClass:GetNeededFiles()
 		"Data/FlavourText.dat",
 		"Data/Words.dat",
 		"Data/ItemClasses.dat",
-		"Data/SkillTotems.dat",
 		"Data/SkillTotemVariations.dat",
-		"Data/SkillMines.dat",
 		"Data/Essences.dat",
 		"Data/EssenceType.dat",
 		"Data/Characters.dat",
 		"Data/BuffDefinitions.dat",
-		"Data/BuffCategories.dat",
 		"Data/BuffTemplates.dat",
 		"Data/BuffVisuals.dat",
-		"Data/BuffVisualSets.dat",
 		"Data/BuffVisualSetEntries.dat",
 		"Data/BuffVisualsArtVariations.dat",
 		"Data/BuffVisualOrbs.dat",
@@ -171,7 +197,6 @@ function GGPKClass:GetNeededFiles()
 		"Data/GrantedEffectsPerLevel.dat",
 		"Data/ItemExperiencePerLevel.dat",
 		"Data/EffectivenessCostConstants.dat",
-		"Data/StatInterpolationTypes.dat",
 		"Data/Tags.dat",
 		"Data/GemTags.dat",
 		"Data/ItemVisualIdentity.dat",
@@ -182,7 +207,6 @@ function GGPKClass:GetNeededFiles()
 		"Data/AlternatePassiveSkills.dat",
 		"Data/AlternateTreeVersions.dat",
 		"Data/GrantedEffectQualityStats.dat",
-		"Data/GrantedEffectGroups.dat",
 		"Data/AegisVariations.dat",
 		"Data/CostTypes.dat",
 		"Data/PassiveJewelRadii.dat",
@@ -228,6 +252,16 @@ function GGPKClass:GetNeededFiles()
 		"Data/weaponclasses.dat",
 		"Data/monsterconditions.dat",
 		"Data/rarity.dat",
+		"Data/trademarketcategory.dat",
+		"Data/trademarketcategorygroups.dat",
+		"Data/PlayerTradeWhisperFormats.dat",
+		"Data/TradeMarketCategoryListAllClass.dat",
+		"Data/TradeMarketIndexItemAs.dat",
+		"Data/TradeMarketImplicitModDisplay.dat",
+		"Data/Commands.dat",
+		"Data/ModEquivalencies.dat",
+		"Data/InfluenceTags.dat",
+		"Data/leaguenames.dat"
 	}
 	local txtFiles = {
 		"Metadata/StatDescriptions/passive_skill_aura_stat_descriptions.txt",

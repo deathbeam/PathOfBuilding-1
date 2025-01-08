@@ -161,7 +161,7 @@ data.misc = { -- magic numbers
 	AvoidChanceCap = 75,
 	EnergyShieldRechargeBase = 0.33,
 	EnergyShieldRechargeDelay = 2,
-	WardRechargeDelay = 4,
+	WardRechargeDelay = 2,
 	Transfiguration = 0.3,
 	EnemyMaxResist = 75,
 	LeechRateBase = 0.02,
@@ -261,8 +261,10 @@ data.keystones = {
 	"Acrobatics",
 	"Ancestral Bond",
 	"Arrow Dancing",
+	"Arsenal of Vengeance",
 	"Avatar of Fire",
 	"Blood Magic",
+	"Bloodsoaked Blade",
 	"Call to Arms",
 	"Chaos Inoculation",
 	"Conduit",
@@ -354,6 +356,9 @@ data.highPrecisionMods = {
 	["EnergyShieldRegen"] = {
 		["BASE"] = 1,
 	},
+	["RageRegen"] = {
+		["BASE"] = 1,
+	},
 	["LifeDegenPercent"] = {
 		["BASE"] = 2,
 	},
@@ -437,7 +442,7 @@ data.highPrecisionMods = {
 	},
 	["SupportManaMultiplier"] = {
 		["MORE"] = 4,
-	}
+	},
 }
 
 data.weaponTypeInfo = {
@@ -517,6 +522,7 @@ data.jewelRadius = data.setJewelRadiiGlobally(latestTreeVersion)
 data.enchantmentSource = {
 	{ name = "ENKINDLING", label = "Enkindling Orb" },
 	{ name = "INSTILLING", label = "Instilling Orb" },
+	{ name = "RUNESMITH", label = "Runecraft Bench" },
 	{ name = "HEIST", label = "Heist" },
 	{ name = "HARVEST", label = "Harvest" },
 	{ name = "DEDICATION", label = "Dedication to the Goddess" },
@@ -550,8 +556,26 @@ data.enchantments = {
 	["Belt"] = LoadModule("Data/EnchantmentBelt"),
 	["Body Armour"] = LoadModule("Data/EnchantmentBody"),
 	["Weapon"] = LoadModule("Data/EnchantmentWeapon"),
-	["Flask"] = LoadModule("Data/EnchantmentFlask"),
+	["UtilityFlask"] = LoadModule("Data/EnchantmentFlask"),
 }
+do
+	data.enchantments["Flask"] = data.enchantments["UtilityFlask"]--["HARVEST"]
+	for baseType, _ in pairs(data.weaponTypeInfo) do
+		data.enchantments[baseType] = { }
+		for enchantmentType, enchantmentList in pairs(data.enchantments["Weapon"]) do
+			if type(enchantmentList[1]) == "string" then
+				data.enchantments[baseType][enchantmentType] = enchantmentList
+			elseif type(enchantmentList[1]) == "table" then
+				data.enchantments[baseType][enchantmentType] = {}
+				for _, enchantment in ipairs(enchantmentList) do
+					if enchantment.types[baseType] then
+						t_insert(data.enchantments[baseType][enchantmentType], table.concat(enchantment, "/"))
+					end
+				end
+			end
+		end
+	end					
+end
 data.essences = LoadModule("Data/Essence")
 data.veiledMods = LoadModule("Data/ModVeiled")
 data.necropolisMods = LoadModule("Data/ModNecropolis")
@@ -600,6 +624,7 @@ data.itemTagSpecialExclusionPattern = {
 			"your Spectres' Life", -- The Jinxed Juju
 			"when on Full Life",
 			"when on Low Life",
+			"^Allocates",
 		},
 		["body armour"] = {
 			"Life as Physical Damage",
@@ -607,13 +632,16 @@ data.itemTagSpecialExclusionPattern = {
 			"maximum Life as Fire Damage",
 			"when on Full Life",
 			"when on Low Life",
-			"^Socketed Gems are Supported by Level"
+			"Gain Maximum Life instead of Maximum Energy Shield",
+			"^Socketed Gems are Supported by Level",
+			"^Allocates",
 		},
 		["boots"] = {
 			"Enemy's Life", -- Legacy of Fury
 			"^Enemies Cannot Leech Life", -- Sin Trek
 			"when on Full Life",
 			"when on Low Life",
+			"^Allocates",
 		},
 		["belt"] = {
 			"Life as Extra Maximum Energy Shield", -- Soul Tether
@@ -621,12 +649,14 @@ data.itemTagSpecialExclusionPattern = {
 			"Life Flasks gain", -- The Druggery
 			"when on Full Life",
 			"when on Low Life",
+			"^Allocates",
 		},
 		["gloves"] = {
 			"maximum Life as Physical Damage", -- Haemophilia
 			"Traps Cost Life", -- Slavedriver's Hand
 			"when on Full Life",
 			"when on Low Life",
+			"^Allocates",
 		},
 		["helmet"] = {
 			"Recouped as Life", -- Flame Exarch
@@ -636,18 +666,21 @@ data.itemTagSpecialExclusionPattern = {
 			"^Socketed Gems are Supported by Level", -- Shako
 			"when on Full Life",
 			"when on Low Life",
+			"^Allocates",
 		},
 		["ring 1"] = {
 			"Energy Shield instead of Life", -- Valyrium
 			"increased Damage while Leeching Life", -- Synthesis Implicit
 			"when on Full Life",
 			"when on Low Life",
+			"^Allocates",
 		},
 		["ring 2"] = {
 			"Energy Shield instead of Life", -- Valyrium
 			"increased Damage while Leeching Life", -- Synthesis Implicit
 			"when on Full Life",
 			"when on Low Life",
+			"^Allocates",
 		},
 		["weapon 1"] = {
 			"^Socketed Gems are Supported by Level", -- Hiltless, etc
@@ -657,6 +690,7 @@ data.itemTagSpecialExclusionPattern = {
 			"maximum Life as Fire Damage", -- Crucible
 			"when on Full Life",
 			"when on Low Life",
+			"^Allocates",
 
 		},
 		["weapon 2"] = {
@@ -667,6 +701,7 @@ data.itemTagSpecialExclusionPattern = {
 			"maximum Life as Fire Damage", -- Crucible
 			"when on Full Life",
 			"when on Low Life",
+			"^Allocates",
 		}
 	},
 	["evasion"] = {

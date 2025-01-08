@@ -103,7 +103,7 @@ return {
 			list=false,
 			name="",
 			refTo="",
-			type="Int",
+			type="UInt16",
 			width=150
 		},
 		[3]={
@@ -218,7 +218,7 @@ return {
 		[14]={
 			list=false,
 			name="SkillTotem",
-			refTo="SkillTotems",
+			refTo="",
 			type="Int",
 			width=80
 		},
@@ -334,8 +334,6 @@ return {
 			type="Key",
 			width=150
 		}
-	},
-	activeskilltargettypes={
 	},
 	activeskilltype={
 		[1]={
@@ -572,9 +570,9 @@ return {
 		[4]={
 			list=true,
 			name="StatsKeys",
-			refTo="",
-			type="UInt",
-			width=80
+			refTo="Stats",
+			type="Key",
+			width=200
 		},
 		[5]={
 			list=false,
@@ -701,7 +699,7 @@ return {
 			list=false,
 			name="ConquerorIndex",
 			refTo="",
-			type="UInt",
+			type="Int",
 			width=90
 		},
 		[14]={
@@ -729,21 +727,21 @@ return {
 			list=true,
 			name="AchievementItemsKeys",
 			refTo="",
-			type="UInt",
+			type="Key",
 			width=150
 		},
 		[18]={
 			list=false,
 			name="ConquerorVersion",
 			refTo="",
-			type="UInt",
+			type="Int",
 			width=150
 		},
 		[19]={
 			list=false,
 			name="ConquerorSpawnWeight",
 			refTo="",
-			type="UInt",
+			type="Int",
 			width=150
 		}
 	},
@@ -752,10 +750,10 @@ return {
 	alternatequalitytypes={
 		[1]={
 			list=false,
-			name="QualityMod",
-			refTo="Mods",
-			type="Key",
-			width=190
+			name="Id",
+			refTo="",
+			type="String",
+			width=200
 		},
 		[2]={
 			list=false,
@@ -776,7 +774,42 @@ return {
 			name="",
 			refTo="",
 			type="Key",
-			width=150
+			width=40
+		},
+		[5]={
+			list=true,
+			name="MapStats",
+			refTo="Stats",
+			type="Key",
+			width=230
+		},
+		[6]={
+			list=false,
+			name="",
+			refTo="",
+			type="Int",
+			width=60
+		},
+		[7]={
+			list=false,
+			name="IsCatalyst",
+			refTo="",
+			type="Bool",
+			width=80
+		},
+		[8]={
+			list=false,
+			name="HASH16",
+			refTo="",
+			type="UInt16",
+			width=80
+		},
+		[9]={
+			list=false,
+			name="CatalystMod",
+			refTo="Mods",
+			type="Key",
+			width=200
 		}
 	},
 	alternateskilltargetingbehaviours={
@@ -839,7 +872,7 @@ return {
 			list=false,
 			name="NotableReplacementSpawnWeight ",
 			refTo="",
-			type="UInt",
+			type="Int",
 			width=200
 		}
 	},
@@ -1683,7 +1716,7 @@ return {
 			list=false,
 			name="HASH32",
 			refTo="",
-			type="Int",
+			type="UInt",
 			width=100
 		},
 		[17]={
@@ -1788,6 +1821,27 @@ return {
 			list=true,
 			name="Achievement2",
 			refTo="AchievementItems",
+			type="Key",
+			width=150
+		},
+		[32]={
+			list=false,
+			name="IgnoreQuantBonus",
+			refTo="",
+			type="Bool",
+			width=150
+		},
+		[33]={
+			list=false,
+			name="",
+			refTo="",
+			type="Bool",
+			width=50
+		},
+		[34]={
+			list=false,
+			name="",
+			refTo="",
 			type="Key",
 			width=150
 		}
@@ -1909,8 +1963,6 @@ return {
 	breachstones={
 	},
 	breachstoneupgrades={
-	},
-	buffcategories={
 	},
 	buffdefinitions={
 		[1]={
@@ -2769,8 +2821,6 @@ return {
 			width=80
 		}
 	},
-	buffvisualsets={
-	},
 	characteraudioevents={
 	},
 	charactereventtextaudio={
@@ -2947,7 +2997,7 @@ return {
 			list=false,
 			name="HASH32",
 			refTo="",
-			type="Int",
+			type="UInt",
 			width=150
 		},
 		[6]={
@@ -2965,6 +3015,48 @@ return {
 	colours={
 	},
 	commands={
+		[1]={
+			list=false,
+			name="Id",
+			refTo="",
+			type="String",
+			width=300
+		},
+		[2]={
+			list=false,
+			name="Command",
+			refTo="",
+			type="String",
+			width=150
+		},
+		[3]={
+			list=false,
+			name="",
+			refTo="",
+			type="Bool",
+			width=150
+		},
+		[4]={
+			list=false,
+			name="EnglishCommand",
+			refTo="",
+			type="String",
+			width=150
+		},
+		[5]={
+			list=false,
+			name="Description",
+			refTo="",
+			type="String",
+			width=600
+		},
+		[6]={
+			list=false,
+			name="",
+			refTo="",
+			type="Bool",
+			width=150
+		}
 	},
 	componentarmour={
 		[1]={
@@ -3410,6 +3502,13 @@ return {
 			refTo="",
 			type="Key",
 			width=260
+		},
+		[40]={
+			list=true,
+			name="Tags",
+			refTo="Tags",
+			type="Key",
+			width=150
 		}
 	},
 	craftingbenchsortcategories={
@@ -3509,6 +3608,13 @@ return {
 			refTo="",
 			type="String",
 			width=130
+		},
+		[5]={
+			list=true,
+			name="",
+			refTo="",
+			type="Key",
+			width=150
 		}
 	},
 	crucibledifficulty={
@@ -4015,7 +4121,7 @@ return {
 			list=false,
 			name="Unknown23",
 			refTo="",
-			type="UInt",
+			type="Int",
 			width=100
 		},
 		[25]={
@@ -4619,7 +4725,7 @@ return {
 			name="Tags",
 			refTo="GemTags",
 			type="Key",
-			width=390
+			width=450
 		},
 		[10]={
 			list=false,
@@ -4686,6 +4792,8 @@ return {
 	},
 	gemtypes={
 	},
+	gemvisualeffect={
+	},
 	genericbuffauras={
 		[1]={
 			list=false,
@@ -4716,8 +4824,6 @@ return {
 	goldconstants={
 	},
 	grandmasters={
-	},
-	grantedeffectgroups={
 	},
 	grantedeffectqualitystats={
 		[1]={
@@ -4820,7 +4926,7 @@ return {
 			name="Hash",
 			refTo="",
 			type="UInt",
-			width=50
+			width=80
 		},
 		[10]={
 			list=true,
@@ -5058,28 +5164,28 @@ return {
 			list=false,
 			name="ManaReservationFlat",
 			refTo="",
-			type="UInt",
+			type="Int",
 			width=150
 		},
 		[18]={
 			list=false,
 			name="ManaReservationPercent",
 			refTo="",
-			type="UInt",
+			type="Int",
 			width=150
 		},
 		[19]={
 			list=false,
 			name="LifeReservationFlat",
 			refTo="",
-			type="UInt",
+			type="Int",
 			width=150
 		},
 		[20]={
 			list=false,
 			name="LifeReservationPercent",
 			refTo="",
-			type="UInt",
+			type="Int",
 			width=150
 		},
 		[21]={
@@ -5528,6 +5634,28 @@ return {
 	influencemodupgrades={
 	},
 	influencetags={
+		[1]={
+			list=false,
+			name="ItemClass",
+			refTo="ItemClasses",
+			type="Key",
+			width=150
+		},
+		[2]={
+			enumBase=1,
+			list=false,
+			name="InfluenceType",
+			refTo="influencetypes",
+			type="Enum",
+			width=150
+		},
+		[3]={
+			list=false,
+			name="tags",
+			refTo="Tags",
+			type="Key",
+			width=150
+		}
 	},
 	influencetypes={
 	},
@@ -5970,7 +6098,7 @@ return {
 			list=false,
 			name="Hash",
 			refTo="",
-			type="Int",
+			type="UInt16",
 			width=70
 		},
 		[6]={
@@ -6379,6 +6507,8 @@ return {
 	},
 	leagueinfopanelversions={
 	},
+	leaguenames={
+	},
 	leagueprogressquestflags={
 	},
 	leaguequestflags={
@@ -6672,10 +6802,6 @@ return {
 	},
 	missiontransitiontiles={
 	},
-	modauraflags={
-	},
-	moddomains={
-	},
 	modeffectstats={
 		[1]={
 			list=false,
@@ -6773,8 +6899,6 @@ return {
 			width=200
 		}
 	},
-	modgenerationtype={
-	},
 	mods={
 		[1]={
 			list=false,
@@ -6787,7 +6911,7 @@ return {
 			list=false,
 			name="Hash",
 			refTo="",
-			type="UInt",
+			type="UInt16",
 			width=60
 		},
 		[3]={
@@ -6836,7 +6960,7 @@ return {
 			list=false,
 			name="Domain",
 			refTo="ModDomains",
-			type="Enum",
+			type="Int",
 			width=60
 		},
 		[10]={
@@ -6850,7 +6974,7 @@ return {
 			list=false,
 			name="GenerationType",
 			refTo="ModGenerationType",
-			type="Enum",
+			type="Int",
 			width=100
 		},
 		[12]={
@@ -8122,7 +8246,7 @@ return {
 			list=false,
 			name="Hash",
 			refTo="",
-			type="Int",
+			type="UInt16",
 			width=50
 		},
 		[55]={
@@ -8439,6 +8563,20 @@ return {
 			refTo="",
 			type="Bool",
 			width=50
+		},
+		[100]={
+			list=false,
+			name="BossHealthBar",
+			refTo="",
+			type="Bool",
+			width=100
+		},
+		[101]={
+			list=false,
+			name="",
+			refTo="",
+			type="Bool",
+			width=50
 		}
 	},
 	monstervarietiesartvariations={
@@ -8680,49 +8818,70 @@ return {
 			name="Effect2Values",
 			refTo="",
 			type="Int",
-			width=150
+			width=100
 		},
 		[19]={
+			list=false,
+			name="QuestFlags",
+			refTo="QuestFlags",
+			type="Key",
+			width=100
+		},
+		[20]={
+			list=false,
+			name="IsDisabled",
+			refTo="",
+			type="Bool",
+			width=100
+		},
+		[21]={
+			list=true,
+			name="AchievementItems",
+			refTo="AchievementItems",
+			type="Key",
+			width=150
+		},
+		[22]={
+			list=false,
+			name="LeagueQuestFlag1",
+			refTo="",
+			type="Int",
+			width=110
+		},
+		[23]={
+			list=false,
+			name="LeagueQuestFlag2",
+			refTo="",
+			type="Int",
+			width=110
+		},
+		[24]={
+			list=false,
+			name="LeagueQuestFlag3",
+			refTo="",
+			type="Int",
+			width=110
+		},
+		[25]={
 			list=false,
 			name="QuestState1",
 			refTo="QuestStates",
 			type="Key",
 			width=70
 		},
-		[20]={
+		[26]={
 			list=false,
 			name="QuestState2",
 			refTo="QuestStates",
 			type="Key",
 			width=70
 		},
-		[21]={
+		[27]={
 			list=false,
 			name="QuestState3",
 			refTo="QuestStates",
 			type="Key",
 			width=70
-		},
-		[22]={
-			list=false,
-			name="QuestState4",
-			refTo="QuestStates",
-			type="Key",
-			width=70
-		},
-		[23]={
-			list=false,
-			name="IsDisabled",
-			refTo="",
-			type="Bool",
-			width=150
-		},
-		[24]={
-			list=true,
-			name="AchievementItems",
-			refTo="AchievementItems",
-			type="Key",
-			width=150
 		}
 	},
 	pantheonsouls={
@@ -8893,7 +9052,7 @@ return {
 			list=false,
 			name="Hash",
 			refTo="",
-			type="Int",
+			type="UInt16",
 			width=80
 		},
 		[3]={
@@ -8928,6 +9087,13 @@ return {
 			list=false,
 			name="AchievementItem",
 			refTo="AchievementItems",
+			type="Key",
+			width=150
+		},
+		[8]={
+			list=false,
+			name="",
+			refTo="",
 			type="Key",
 			width=150
 		}
@@ -9160,7 +9326,7 @@ return {
 			list=false,
 			name="PassiveSkillNodeId",
 			refTo="",
-			type="Int",
+			type="UInt16",
 			width=100
 		},
 		[9]={
@@ -9311,10 +9477,11 @@ return {
 			width=60
 		},
 		[30]={
+			enumBase=1,
 			list=false,
 			name="Type",
 			refTo="PassiveSkillTypes",
-			type="Int",
+			type="Enum",
 			width=80
 		},
 		[31]={
@@ -9990,6 +10157,13 @@ return {
 			refTo="",
 			type="String",
 			width=80
+		},
+		[9]={
+			list=false,
+			name="",
+			refTo="",
+			type="String",
+			width=80
 		}
 	},
 	raritymask={
@@ -10446,8 +10620,6 @@ return {
 			width=600
 		}
 	},
-	skillmines={
-	},
 	skillminevariations={
 	},
 	skillmorphdisplay={
@@ -10458,14 +10630,12 @@ return {
 	},
 	skillsurgeeffects={
 	},
-	skilltotems={
-	},
 	skilltotemvariations={
 		[1]={
 			list=false,
 			name="SkillTotem",
-			refTo="SkillTotems",
-			type="Enum",
+			refTo="",
+			type="Int",
 			width=60
 		},
 		[2]={
@@ -10563,8 +10733,6 @@ return {
 	stashtype={
 	},
 	statdescriptionfunctions={
-	},
-	statinterpolationtypes={
 	},
 	stats={
 		[1]={
@@ -10716,8 +10884,6 @@ return {
 			type="Int",
 			width=150
 		}
-	},
-	statsemantics={
 	},
 	statsets={
 	},
@@ -11225,10 +11391,24 @@ return {
 	tinctures={
 		[1]={
 			list=false,
-			name="BaseItem",
+			name="BaseItemType",
 			refTo="BaseItemTypes",
 			type="Key",
-			width=320
+			width=250
+		},
+		[2]={
+			list=false,
+			name="ManaBurn",
+			refTo="",
+			type="Int",
+			width=100
+		},
+		[3]={
+			list=false,
+			name="CoolDown",
+			refTo="",
+			type="Int",
+			width=100
 		}
 	},
 	tips={
@@ -11238,16 +11418,121 @@ return {
 	tormentspirits={
 	},
 	trademarketcategory={
+		[1]={
+			list=false,
+			name="Id",
+			refTo="",
+			type="String",
+			width=200
+		},
+		[2]={
+			list=false,
+			name="Name",
+			refTo="",
+			type="String",
+			width=300
+		},
+		[3]={
+			list=false,
+			name="StyleFlag",
+			refTo="",
+			type="Enum",
+			width=150
+		},
+		[4]={
+			list=false,
+			name="Group",
+			refTo="TradeMarketCategoryGroups",
+			type="Key",
+			width=200
+		},
+		[5]={
+			list=false,
+			name="",
+			refTo="",
+			type="Int",
+			width=150
+		},
+		[6]={
+			list=false,
+			name="",
+			refTo="",
+			type="Bool",
+			width=150
+		},
+		[7]={
+			list=false,
+			name="IsDisabled",
+			refTo="",
+			type="Bool",
+			width=150
+		}
 	},
 	trademarketcategorygroups={
+		[1]={
+			list=false,
+			name="Id",
+			refTo="",
+			type="String",
+			width=200
+		},
+		[2]={
+			list=false,
+			name="Name",
+			refTo="",
+			type="String",
+			width=200
+		}
 	},
 	trademarketcategorylistallclass={
+		[1]={
+			list=false,
+			name="TradeCategory",
+			refTo="TradeMarketCategory",
+			type="Key",
+			width=200
+		},
+		[2]={
+			list=false,
+			name="ItemClass",
+			refTo="ItemClasses",
+			type="Key",
+			width=200
+		}
 	},
 	trademarketcategorystyleflag={
 	},
 	trademarketimplicitmoddisplay={
+		[1]={
+			list=false,
+			name="",
+			refTo="",
+			type="Key",
+			width=150
+		},
+		[2]={
+			list=false,
+			name="",
+			refTo="",
+			type="String",
+			width=200
+		}
 	},
 	trademarketindexitemas={
+		[1]={
+			list=false,
+			name="Item",
+			refTo="",
+			type="Key",
+			width=150
+		},
+		[2]={
+			list=false,
+			name="IndexAs",
+			refTo="",
+			type="Key",
+			width=150
+		}
 	},
 	treasurehuntermissions={
 	},
@@ -11457,6 +11742,22 @@ return {
 		}
 	},
 	userinterfacemodecondition={
+	},
+	villageuniquedisenchantvalues={
+		[1]={
+			list=false,
+			name="Unique",
+			refTo="Words.Text",
+			type="Key",
+			width=150
+		},
+		[2]={
+			list=false,
+			name="",
+			refTo="",
+			type="Float",
+			width=150
+		}
 	},
 	virtualstatcontextflags={
 		[1]={
