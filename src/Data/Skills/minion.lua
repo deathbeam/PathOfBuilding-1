@@ -792,6 +792,9 @@ skills["SummonedSpiderViperStrike"] = {
 		attack = true,
 		melee = true,
 	},
+	baseMods = {
+		skill("poisonIsSkillEffect", true),
+	},
 	constantStats = {
 		{ "base_chance_to_poison_on_hit_%", 100 },
 		{ "base_skill_effect_duration", 4000 },

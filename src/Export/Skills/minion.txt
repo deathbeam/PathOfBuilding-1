@@ -121,6 +121,7 @@ local skills, mod, flag, skill = ...
 
 #skill SummonedSpiderViperStrike
 #flags attack melee
+#baseMod skill("poisonIsSkillEffect", true)
 #mods
 
 #skill DancingDervishCycloneChannelled
